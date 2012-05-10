@@ -1,6 +1,7 @@
 # rAppid.js-server - a nodejs render server for rAppid.js application
 
 ## Usage
+```
 Usage: node ./bin/rappidjssrv mainClass.xml
 
 Options:
@@ -11,3 +12,4 @@ Options:
   -o                    A option to start the application
   --applicationUrl, -u  base Url used for relative requests
   --staticFiles         base Url used for relative requests  [boolean]
+```
