@@ -31,7 +31,7 @@
         "jsdom": ">=0.2.14",
         "xmldom": ">=0.1.2",
         "flow.js": ">=0.2.1",
-        "optimist": ">0.3.4"
+        "optimist": ">=0.3.4"
     },
     "devDependencies": {
         "chai": "*",
