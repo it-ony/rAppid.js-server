@@ -7,7 +7,8 @@ var optimist = require('optimist'),
     jsdom = require('jsdom'),
     http = require('http'),
     flow = require('flow.js').flow,
-    url = require('url');
+    url = require('url'),
+    QueryString = require(__dirname + '/../lib/QueryString.js').QueryString;
 
 var argv = optimist
     .usage('\nUsage: $0 mainClass.xml')
@@ -91,7 +92,9 @@ flow()
         // create the server
         var srv = http.createServer(function (request, response) {
 
-            var uri = url.parse(request.url);
+            var uri = url.parse(request.url),
+                queryParameter = QueryString.parse(uri.query);
+
 
             if (uri.pathname === "/" || uri.pathname === "/" + argv.html) {
                 // start file or configured html file
@@ -108,7 +111,12 @@ flow()
                     })
                     .seq(function (cb) {
                         // start application
-                        // TODO: sett parameter.initialHash
+                        startParameter = startParameter || {};
+
+                        if (queryParameter.fragment) {
+                            startParameter.initialHash = queryParameter.fragment;
+                        }
+
                         cb.vars.app.start(startParameter, cb);
                     })
                     .seq("html", function () {
