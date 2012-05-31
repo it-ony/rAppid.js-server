@@ -8,7 +8,7 @@ var optimist = require('optimist'),
     http = require('http'),
     flow = require('flow.js').flow,
     url = require('url'),
-    QueryString = require(__dirname + '/../lib/QueryString.js').QueryString;
+    QueryString = require(__dirname + '/../lib/queryString.js').QueryString;
 
 var argv = optimist
     .usage('\nUsage: $0 mainClass.xml')
