@@ -113,8 +113,8 @@ flow()
                         // start application
                         startParameter = startParameter || {};
 
-                        if (queryParameter.fragment) {
-                            startParameter.initialHash = queryParameter.fragment;
+                        if (queryParameter._escaped_fragment_) {
+                            startParameter.initialHash = queryParameter._escaped_fragment_;
                         }
 
                         cb.vars.app.start(startParameter, cb);
