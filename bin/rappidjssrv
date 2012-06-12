@@ -94,6 +94,7 @@ flow()
         var srv = http.createServer(function (request, response) {
 
             try {
+                console.log(request.url);
 
                 var uri = url.parse(request.url),
                     queryParameter = QueryString.parse(uri.query);
