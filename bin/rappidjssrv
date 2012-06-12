@@ -92,95 +92,103 @@ flow()
         // create the server
         var srv = http.createServer(function (request, response) {
 
-            var uri = url.parse(request.url),
-                queryParameter = QueryString.parse(uri.query);
+            try {
+
+                var uri = url.parse(request.url),
+                    queryParameter = QueryString.parse(uri.query);
 
 
-            if (uri.pathname === "/" || uri.pathname === "/" + argv.html) {
-                // start file or configured html file
-                var d = new Date();
-                flow()
-                    .seq("doc", function () {
-                        // generate document
-                        return jsdom.jsdom(indexContent);
-                    })
-                    .seq("app", function (cb) {
-                        appContext.createApplicationInstance(cb.vars.doc, function (err, systemManager, application) {
-                            cb(err, application);
-                        });
-                    })
-                    .seq(function (cb) {
-                        // start application
-                        startParameter = startParameter || {};
+                if (uri.pathname === "/" || uri.pathname === "/" + argv.html) {
+                    // start file or configured html file
+                    var d = new Date();
+                    flow()
+                        .seq("doc", function () {
+                            // generate document
+                            return jsdom.jsdom(indexContent);
+                        })
+                        .seq("app", function (cb) {
+                            appContext.createApplicationInstance(cb.vars.doc, function (err, systemManager, application) {
+                                cb(err, application);
+                            });
+                        })
+                        .seq(function (cb) {
+                            // start application
+                            startParameter = startParameter || {};
 
-                        if (queryParameter._escaped_fragment_) {
-                            startParameter.initialHash = queryParameter._escaped_fragment_;
-                        }
-
-                        cb.vars.app.start(startParameter, cb);
-                    })
-                    .seq("html", function () {
-                        this.vars.app.render(this.vars.doc.body);
-                        return this.vars.doc;
-                    })
-                    .exec(function (err, results) {
-
-                        var status = 500,
-                            buf;
-
-                        if (!err) {
-                            try {
-                                buf = results.html.innerHTML;
-                                status = 200;
-                            } catch (e) {
-                                buf = JSON.stringify(e);
+                            if (queryParameter._escaped_fragment_) {
+                                startParameter.initialHash = queryParameter._escaped_fragment_;
                             }
-                        } else {
-                            buf = JSON.stringify(err);
-                        }
 
-                        response.writeHead(status, {
-                            'Content-Length': buf.length,
-                            'Content-Type': 'text/html; charset=utf-8' });
-                        response.write(buf);
-                        response.end();
+                            cb.vars.app.start(startParameter, cb);
+                        })
+                        .seq("html", function () {
+                            this.vars.app.render(this.vars.doc.body);
+                            return this.vars.doc;
+                        })
+                        .exec(function (err, results) {
 
-                        console.log("Responses " + ((new Date()).getTime() - d.getTime()) + "ms");
+                            var status = 500,
+                                buf;
 
-                    });
-            } else {
+                            if (!err) {
+                                try {
+                                    buf = results.html.innerHTML;
+                                    status = 200;
+                                } catch (e) {
+                                    buf = JSON.stringify(e);
+                                }
+                            } else {
+                                buf = JSON.stringify(err);
+                            }
 
-                // static file handling
-
-                if (!argv.staticFiles) {
-                    response.writeHead(403, {"Content-Type": "text/plain"});
-                    response.write("403 Forbidden\n");
-                    response.end();
-                } else {
-                    var filename = path.join(applicationDir, uri.pathname);
-                    // TODO check if inside basedir
-                    path.exists(filename, function (exists) {
-                        if (!exists) {
-                            response.writeHead(404, {"Content-Type": "text/plain"});
-                            response.write("404 Not Found\n");
+                            response.writeHead(status, {
+                                'Content-Length': buf.length,
+                                'Content-Type': 'text/html; charset=utf-8' });
+                            response.write(buf);
                             response.end();
-                            return;
-                        }
 
-                        fs.readFile(filename, "binary", function (err, file) {
-                            if (err) {
-                                response.writeHead(500, {"Content-Type": "text/plain"});
-                                response.write(err + "\n");
+                            console.log("Responses " + ((new Date()).getTime() - d.getTime()) + "ms");
+
+                        });
+                } else {
+
+                    // static file handling
+
+                    if (!argv.staticFiles) {
+                        response.writeHead(403, {"Content-Type": "text/plain"});
+                        response.write("403 Forbidden\n");
+                        response.end();
+                    } else {
+                        var filename = path.join(applicationDir, uri.pathname);
+                        // TODO check if inside basedir
+                        path.exists(filename, function (exists) {
+                            if (!exists) {
+                                response.writeHead(404, {"Content-Type": "text/plain"});
+                                response.write("404 Not Found\n");
                                 response.end();
                                 return;
                             }
 
-                            response.writeHead(200);
-                            response.write(file, "binary");
-                            response.end();
+                            fs.readFile(filename, "binary", function (err, file) {
+                                if (err) {
+                                    response.writeHead(500, {"Content-Type": "text/plain"});
+                                    response.write(err + "\n");
+                                    response.end();
+                                    return;
+                                }
+
+                                response.writeHead(200);
+                                response.write(file, "binary");
+                                response.end();
+                            });
                         });
-                    });
+                    }
                 }
+
+            } catch (ex) {
+                response.writeHead(500, {"Content-Type": "text/plain"});
+                response.write(ex + "\n");
+                response.end();
             }
 
         });
