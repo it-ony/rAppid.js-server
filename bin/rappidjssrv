@@ -121,7 +121,7 @@ flow()
                                 startParameter.initialHash = queryParameter._escaped_fragment_;
                             }
 
-                            cb.vars.app.start(defaultStartParameter, cb);
+                            cb.vars.app.start(startParameter, cb);
                         })
                         .seq("html", function () {
                             this.vars.app.render(this.vars.doc.body);
