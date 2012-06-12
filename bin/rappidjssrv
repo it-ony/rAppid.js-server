@@ -8,6 +8,7 @@ var optimist = require('optimist'),
     http = require('http'),
     flow = require('flow.js').flow,
     url = require('url'),
+    underscore = require('underscore'),
     QueryString = require(__dirname + '/../lib/queryString.js').QueryString;
 
 var argv = optimist
@@ -60,7 +61,7 @@ if (!applicationDir) {
     process.exit(1);
 }
 
-var startParameter = argv.o;
+var defaultStartParameter = argv.o;
 
 flow()
     .seq("appContext", function(cb) {
@@ -113,13 +114,13 @@ flow()
                         })
                         .seq(function (cb) {
                             // start application
-                            startParameter = startParameter || {};
+                            var startParameter = _.extend({}, defaultStartParameter);
 
                             if (queryParameter._escaped_fragment_) {
                                 startParameter.initialHash = queryParameter._escaped_fragment_;
                             }
 
-                            cb.vars.app.start(startParameter, cb);
+                            cb.vars.app.start(defaultStartParameter, cb);
                         })
                         .seq("html", function () {
                             this.vars.app.render(this.vars.doc.body);
