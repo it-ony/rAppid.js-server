@@ -43,7 +43,7 @@ if (applicationDir) {
 
 applicationFile = path.resolve(applicationFile);
 
-if (!path.existsSync(applicationFile)) {
+if (!fs.existsSync(applicationFile)) {
     console.warn("Application '" + applicationFile + "' not found");
     process.exit(1);
 }
