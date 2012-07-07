@@ -43,7 +43,7 @@ if (applicationDir) {
 
 applicationFile = path.resolve(applicationFile);
 
-if (!path.existsSync(applicationFile)) {
+if (!fs.existsSync(applicationFile)) {
     console.warn("Application '" + applicationFile + "' not found");
     process.exit(1);
 }
@@ -165,7 +165,7 @@ flow()
                     } else {
                         var filename = path.join(applicationDir, uri.pathname);
                         // TODO check if inside basedir
-                        path.exists(filename, function (exists) {
+                        fs.exists(filename, function (exists) {
                             if (!exists) {
                                 response.writeHead(404, {"Content-Type": "text/plain"});
                                 response.write("404 Not Found\n");
