@@ -105,12 +105,13 @@ flow()
                     var d = new Date(),
                         stage;
                     flow()
-                        .seq("doc", function () {
+                        .seq("window", function () {
                             // generate document
-                            return jsdom.jsdom(indexContent);
+                            var document = jsdom.jsdom(indexContent);
+                            return document.createWindow();
                         })
                         .seq("app", function (cb) {
-                            appContext.createApplicationInstance(cb.vars.doc, function (err, s, application) {
+                            appContext.createApplicationInstance(cb.vars.window, function (err, s, application) {
                                 stage = s;
                                 cb(err, application);
                             });
@@ -126,8 +127,8 @@ flow()
                             cb.vars.app.start(startParameter, cb);
                         })
                         .seq("html", function () {
-                            stage.render(this.vars.doc.body);
-                            return this.vars.doc;
+                            stage.render(this.vars.window.document.body);
+                            return this.vars.window.document;
                         })
                         .exec(function (err, results) {
 
@@ -136,7 +137,7 @@ flow()
 
                             if (!err) {
                                 try {
-                                    buf = results.html.innerHTML;
+                                    buf = '<!DOCTYPE html>\n' + results.html.innerHTML;
                                     status = 200;
                                 } catch (e) {
                                     buf = JSON.stringify(e);
