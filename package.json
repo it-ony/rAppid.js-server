@@ -1,51 +1,51 @@
 {
-    "name": "rAppid.js-server",
-    "preferGlobal": "true",
-    "version": "0.1.3",
-    "author": "rAppid <support@rappidjs.com> (http://rappidjs.com)",
-    "contributors": [
-        "Tony Findeisen <tony@rappidjs.com>",
-        "Marcus Krejpowicz <marcus@rappidjs.com>"
-    ],
-    "description": "rAppid.js-server is a rAppid.js rendering web server",
-    "scripts": {
-        "test": "mocha -R spec"
-    },
-    "bin": {
-        "rappidjssrv": "./bin/rappidjssrv"
-    },
-    "lib": "lib/server.js",
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/it-ony/rAppid.js-server.git"
-    },
-    "keywords": [
-        "rAppid",
-        "web",
-        "server",
-        "seo"
-    ],
-    "dependencies": {
-        "rAppid.js": "latest",
-        "xmlhttprequest": ">=1.3.0",
-        "jsdom": ">=0.2.14",
-        "xmldom": ">=0.1.2",
-        "flow.js": ">=0.2.1",
-        "optimist": ">=0.3.4",
-        "underscore": "latest",
-        "libxml": "latest"
-    },
-    "devDependencies": {
-        "chai": "*",
-        "mocha": "*"
-    },
-    "license": "MIT",
-    "engine": {
-        "node": ">=0.4"
-    },
-    "engines": {
-        "node": "*"
-    },
-    "homepage": "http://rappidjs.com/server",
-    "optionalDependencies": {}
+  "name": "rAppid.js-server",
+  "preferGlobal": "true",
+  "version": "0.1.4",
+  "author": "rAppid <support@rappidjs.com> (http://rappidjs.com)",
+  "contributors": [
+    "Tony Findeisen <tony@rappidjs.com>",
+    "Marcus Krejpowicz <marcus@rappidjs.com>"
+  ],
+  "description": "rAppid.js-server is a rAppid.js rendering web server",
+  "scripts": {
+    "test": "mocha -R spec"
+  },
+  "bin": {
+    "rappidjssrv": "./bin/rappidjssrv"
+  },
+  "lib": "lib/server.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/it-ony/rAppid.js-server.git"
+  },
+  "keywords": [
+    "rAppid",
+    "web",
+    "server",
+    "seo"
+  ],
+  "dependencies": {
+    "rAppid.js": "latest",
+    "xmlhttprequest": ">=1.3.0",
+    "jsdom": ">=0.2.14",
+    "xmldom": ">=0.1.2",
+    "flow.js": ">=0.2.1",
+    "optimist": ">=0.3.4",
+    "underscore": "latest",
+    "libxml": "latest"
+  },
+  "devDependencies": {
+    "chai": "*",
+    "mocha": "*"
+  },
+  "license": "MIT",
+  "engine": {
+    "node": ">=0.4"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "homepage": "http://rappidjs.com/server",
+  "optionalDependencies": {}
 }
