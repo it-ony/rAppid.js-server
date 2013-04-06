@@ -1,6 +1,6 @@
 # rAppid.js-server - a nodejs render server for rAppid.js application
 
-This project is deprecated and has been replaced with the server shipped with (https://github.com/it-ony/rAppid.js)[rAppid.js].
+This project is deprecated and has been replaced with the server shipped with [rAppid.js](https://github.com/it-ony/rAppid.js).
 
 If you haven't set up the project with the `rappidjs create app` command, create the following directory structure.
 
