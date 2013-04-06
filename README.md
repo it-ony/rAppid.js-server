@@ -22,7 +22,8 @@ If you haven't set up the project with the `rappidjs create app` command, create
 ```
 
 The Server.xml looks the following
-```
+
+```xml
 <Server xmlns="srv.core"
         xmlns:handler="srv.handler" xmlns:endpoint="srv.endpoint">
 
