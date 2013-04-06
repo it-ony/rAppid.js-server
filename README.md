@@ -27,7 +27,7 @@ The Server.xml looks the following
         xmlns:handler="srv.handler" xmlns:endpoint="srv.endpoint">
 
     <EndPoints>
-        <endpoint:HttpEndPoint port="8000"/>
+        <endpoint:HttpEndPoint port="8001"/>
     </EndPoints>
 
     <Filters>
